@@ -1,0 +1,101 @@
+digraph ER_Diagram {
+	rankdir=LR size="8,5"
+	User [shape=box]
+	Movie [shape=box]
+	Theater [shape=box]
+	Showtime [shape=box]
+	Seat [shape=box]
+	Booking [shape=box]
+	Payment [shape=box]
+	Ticket [shape=box]
+	BookingSeat [shape=box]
+	"User_UserID (PK)" [label="UserID (PK)" shape=ellipse]
+	User -> "User_UserID (PK)"
+	User_Name [label=Name shape=ellipse]
+	User -> User_Name
+	User_Email [label=Email shape=ellipse]
+	User -> User_Email
+	User_Password [label=Password shape=ellipse]
+	User -> User_Password
+	User_Role [label=Role shape=ellipse]
+	User -> User_Role
+	"Movie_MovieID (PK)" [label="MovieID (PK)" shape=ellipse]
+	Movie -> "Movie_MovieID (PK)"
+	Movie_Name [label=Name shape=ellipse]
+	Movie -> Movie_Name
+	Movie_Genre [label=Genre shape=ellipse]
+	Movie -> Movie_Genre
+	Movie_Rating [label=Rating shape=ellipse]
+	Movie -> Movie_Rating
+	Movie_Language [label=Language shape=ellipse]
+	Movie -> Movie_Language
+	Movie_Description [label=Description shape=ellipse]
+	Movie -> Movie_Description
+	Movie_Poster [label=Poster shape=ellipse]
+	Movie -> Movie_Poster
+	Movie_Trailer [label=Trailer shape=ellipse]
+	Movie -> Movie_Trailer
+	"Theater_TheaterID (PK)" [label="TheaterID (PK)" shape=ellipse]
+	Theater -> "Theater_TheaterID (PK)"
+	Theater_Name [label=Name shape=ellipse]
+	Theater -> Theater_Name
+	Theater_City [label=City shape=ellipse]
+	Theater -> Theater_City
+	Theater_SeatLayout [label=SeatLayout shape=ellipse]
+	Theater -> Theater_SeatLayout
+	"Showtime_ShowtimeID (PK)" [label="ShowtimeID (PK)" shape=ellipse]
+	Showtime -> "Showtime_ShowtimeID (PK)"
+	"Showtime_MovieID (FK)" [label="MovieID (FK)" shape=ellipse]
+	Showtime -> "Showtime_MovieID (FK)"
+	"Showtime_TheaterID (FK)" [label="TheaterID (FK)" shape=ellipse]
+	Showtime -> "Showtime_TheaterID (FK)"
+	Showtime_DateTime [label=DateTime shape=ellipse]
+	Showtime -> Showtime_DateTime
+	"Seat_SeatID (PK)" [label="SeatID (PK)" shape=ellipse]
+	Seat -> "Seat_SeatID (PK)"
+	"Seat_TheaterID (FK)" [label="TheaterID (FK)" shape=ellipse]
+	Seat -> "Seat_TheaterID (FK)"
+	Seat_SeatNumber [label=SeatNumber shape=ellipse]
+	Seat -> Seat_SeatNumber
+	Seat_SeatType [label=SeatType shape=ellipse]
+	Seat -> Seat_SeatType
+	Seat_Price [label=Price shape=ellipse]
+	Seat -> Seat_Price
+	"Booking_BookingID (PK)" [label="BookingID (PK)" shape=ellipse]
+	Booking -> "Booking_BookingID (PK)"
+	"Booking_UserID (FK)" [label="UserID (FK)" shape=ellipse]
+	Booking -> "Booking_UserID (FK)"
+	"Booking_ShowtimeID (FK)" [label="ShowtimeID (FK)" shape=ellipse]
+	Booking -> "Booking_ShowtimeID (FK)"
+	Booking_BookingTime [label=BookingTime shape=ellipse]
+	Booking -> Booking_BookingTime
+	"Payment_PaymentID (PK)" [label="PaymentID (PK)" shape=ellipse]
+	Payment -> "Payment_PaymentID (PK)"
+	"Payment_BookingID (FK)" [label="BookingID (FK)" shape=ellipse]
+	Payment -> "Payment_BookingID (FK)"
+	Payment_Amount [label=Amount shape=ellipse]
+	Payment -> Payment_Amount
+	Payment_Status [label=Status shape=ellipse]
+	Payment -> Payment_Status
+	Payment_PaymentDate [label=PaymentDate shape=ellipse]
+	Payment -> Payment_PaymentDate
+	"Ticket_TicketID (PK)" [label="TicketID (PK)" shape=ellipse]
+	Ticket -> "Ticket_TicketID (PK)"
+	"Ticket_BookingID (FK)" [label="BookingID (FK)" shape=ellipse]
+	Ticket -> "Ticket_BookingID (FK)"
+	Ticket_UniqueCode [label=UniqueCode shape=ellipse]
+	Ticket -> Ticket_UniqueCode
+	"BookingSeat_BookingID (FK)" [label="BookingID (FK)" shape=ellipse]
+	BookingSeat -> "BookingSeat_BookingID (FK)"
+	"BookingSeat_SeatID (FK)" [label="SeatID (FK)" shape=ellipse]
+	BookingSeat -> "BookingSeat_SeatID (FK)"
+	User -> Booking [arrowhead=normal]
+	Movie -> Showtime [arrowhead=normal]
+	Theater -> Showtime [arrowhead=normal]
+	Theater -> Seat [arrowhead=normal]
+	Showtime -> Booking [arrowhead=normal]
+	Booking -> Payment [arrowhead=normal]
+	Booking -> Ticket [arrowhead=normal]
+	Booking -> BookingSeat [arrowhead=normal]
+	Seat -> BookingSeat [arrowhead=normal]
+}
