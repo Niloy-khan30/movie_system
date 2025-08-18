@@ -93,6 +93,11 @@ include('header.php');
                 <input type="text" class="form-control" name="location" value="" placeholder="Enter location">
             </div>
 
+            <div class="form-group mb-4">
+                Theator Name :
+                <input type="text" class="form-control" name="theator_name" value="" placeholder="Enter theator name">
+            </div>
+
 
 
 
@@ -180,9 +185,12 @@ if(isset($_POST['add'])) {
     $date = $_POST['date'];
     $price = $_POST['price'];
     $location = $_POST['location'];
+    $theator_name = $_POST['theator_name'];
 
   
-    $sql = "INSERT INTO `theator`( `movieID`, `timing`, `date`, `price`, `location`) VALUES ('$movieid','$time','$date','$price','$location')";
+    $sql = "INSERT INTO theator (movieID, timing, date, price, location, theator_name) 
+            VALUES ('$movieid', '$time', '$date', '$price', '$location', '$theator_name')";
+            
     if(mysqli_query($conn, $sql)) {
         echo "<script>alert('theator added successfully');</script>";
         echo "<script>window.location.href = 'theator.php';</script>";
