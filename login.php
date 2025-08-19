@@ -25,12 +25,12 @@
 
 </head>
 <body>
-    <div class="d-flex flex-column justify-content-center align-items-center vh-100 bg-gray">
+    <div class="d-flex flex-column justify-content-center align-items-center vh-100 bg-light" >
             <form action="login.php" method="post" class="php-email-form aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
-              <div class="row gy-4">
+              <div class="row gy-4" style ="box-shadow: 0 0 10px rgba(0,0,0,0.1); padding: 20px; border-radius: 10px;">
 
-
-                <div class="col-md-6">
+                <span style= 'text-align:center; '>LOGIN FORM</span>
+                <div class="col-md-12" >
                   <label for="email-field" class="pb-2">Your Email</label>
                   <input type="email" class="form-control" name="email" id="email-field" required="">
                 </div>
