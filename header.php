@@ -30,15 +30,15 @@
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="index.php" class="active">Home</a></li>
+            <li><a href="home.php" class="active">Home</a></li>
 
             <?php
           
 
               if (!isset($_SESSION['user_id'])) {
                   echo '
-                  <li><a href="movies.php">Movies</a></li>
-                  <li><a href="theator.php">Theator</a></li>
+                  <li><a href="index.php">Movies</a></li>
+                  <li><a href="show_theaters.php">Theator</a></li>
                   <li><a href="login.php">Login</a></li>
                   <li><a href="register.php">Register</a></li>
                   ';
@@ -46,8 +46,9 @@
                   $type = $_SESSION['role']; // corrected
                   if ($type == 2) {
                       echo '
-                      <li><a href="movies.php">Movies</a></li>
-                      <li><a href="theator.php">Theator</a></li>
+                      <li><a href="user_dashboard.php">Dashboard</a></li>
+                      <li><a href="index.php">Movies</a></li>
+                      <li><a href="show_theaters.php">Theator</a></li>
                       <li><a href="booking.php">Booking</a></li>
                       <li><a href="logout.php">Logout</a></li>
                       ';

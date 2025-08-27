@@ -30,12 +30,11 @@
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="dashboard.php" class="active">Dashboard</a></li>
+            <li><a href="admin_dashboard.php" class="active">Dashboard</a></li>
             <li><a href="catagories.php">Catagories</a></li>
             <li><a href="movies.php">Movies</a></li>
-            <li><a href="theator.php">Theator</a></li>
-            <li><a href="getAllUser.php">Users</a></li>
-            <li><a href="getAllBooking.php">Booking</a></li>
+            <li><a href="new_theater.php">Theator</a></li>
+            <li><a href="hosting.php">Hosting</a></li>
             <li><a href="logout.php">Logout</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>

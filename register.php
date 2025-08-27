@@ -45,7 +45,7 @@
                 <div class="col-md-12">
                   <label for="subject-field" class="pb-2">Password</label>
                   <input type="password" class="form-control" name="password" id="subject-field" required="" placeholder="Enter your password">
-                </div>
+                </div >
 
                   <button type="submit" class= 'btn btn-primary' name= 'register'>register</button>
                 </div>
