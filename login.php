@@ -121,21 +121,26 @@ include('connect.php');
 if(isset($_POST['login'])){
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
+    $sql = "SELECT * FROM users WHERE email='$email' limit 1";
     $rsult = mysqli_query($conn, $sql);
 
     if(mysqli_num_rows($rsult) > 0){
         $data = mysqli_fetch_array($rsult);
-        $_SESSION['user_id'] = $data['userID'];
-        $_SESSION['role'] = $data['roletype'];
 
-        if ($data['roletype'] == 1){
-            header('Location: admin/admin_dashboard.php');
-            exit();
-        } else if($data['roletype'] == 2){
-            header('Location: user_dashboard.php');
-            exit();
-        }
+        if(password_verify($password, $data['password'])) {
+       
+              $_SESSION['user_id'] = $data['userID'];
+              $_SESSION['role'] = $data['roletype'];
+
+              if ($data['roletype'] == 1){
+                  header('Location: admin/admin_dashboard.php');
+                  exit();
+              } else if($data['roletype'] == 2){
+                  header('Location: user_dashboard.php');
+                  exit();
+              }
+            }
+          
     } else {
         echo "<script>alert('Invalid email or password');</script>";
     }
