@@ -3,7 +3,23 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
- ?>
+?>
+
+<?php
+    if (isset($_GET['theater_id'])) {  
+        $theater_id = $_GET['theater_id']??null;
+    }
+    if(isset($_GET['booking_id'])) {  
+        $booking_id = $_GET['booking_id']??null;
+    }
+
+    if(isset($_GET['seat_id'])) {  
+        $seat_id = $_GET['seat_id']??null;
+    }
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,7 +50,7 @@ if (!isset($_SESSION['user_id'])) {
 
         img{
           position :absolute;
-          top : 40px;
+          top : 70px;
           right : 20px;
         }
     </style>
@@ -42,28 +58,23 @@ if (!isset($_SESSION['user_id'])) {
 </head>
 <body>
   
-    <?php
-    if (isset($_GET['theater_id'])) {  
-        $theater_id = $_GET['theater_id'];
-    }
-    if(isset($_GET['booking_id'])) {  
-        $booking_id = $_GET['booking_id'];
-    }
-    ?>
+
 
 
     <div class="d-flex flex-column justify-content-center align-items-center vh-100 bg-gray">
-            <form action="book_seat.php" method="post" class="php-email-form aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+            <form action="ticket.php" method="post" class="php-email-form aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
               <div class="row gy-4" style ="box-shadow: 0 0 10px rgba(0,0,0,0.1); padding: 20px; border-radius: 10px;" id = 'bookingform'>
-                <span style = 'text-align:center'>BOOKING SEAT</span>
+                <span style = 'text-align:center'>BOOKING TICKET</span>
                 <div>
                   <?php
-                      $sql = "select movies.*, new_theater.*, showtimes.*, booking.*, users.* from booking
-                      INNER JOIN users ON booking.userID = users.userID
+                      $sql = "select booking.*, movies.*, new_theater.*, showtimes.*, users.*, seats.* from booking
                       INNER JOIN showtimes ON booking.showtime_id = showtimes.showtime_id
                       INNER JOIN movies ON showtimes.movieID = movies.movieID
                       INNER JOIN new_theater ON showtimes.theater_id = new_theater.theater_id
-                      WHERE booking.bookingID = '$booking_id'";
+                      INNER JOIN users ON booking.userID = users.userID
+                      INNER JOIN seats ON seats.theater_id = new_theater.theater_id
+                      WHERE seats.seatID = '$seat_id' and users.userID = '".$_SESSION['user_id']."' and new_theater.theater_id = '$theater_id' and booking.bookingID = '$booking_id'";
+                      
 
                       $result = mysqli_query($conn, $sql);
                       if(mysqli_num_rows($result) > 0){
@@ -76,8 +87,11 @@ if (!isset($_SESSION['user_id'])) {
                           echo "<p style = 'margin-top: -20px'>Location   : ".$row['tlocation']."</p>";
                           echo "<p style = 'margin-top: -20px'>Booked By   : ".$row['name']."</p>";
                           echo "<p style = 'margin-top: -20px'>Booking Date   : ".$row['bookingDate']."</p>";
+                          echo "<p style = 'margin-top: -20px'>Seat Type   : ".$row['type']."</p>";
+                          echo "<p style = 'margin-top: -20px'>Seat quantity   : ".$row['No_of_seats']."</p>";
                           echo "<img src='admin/uploads/" . $row['image'] . "' style='height:230px; width:200px' alt=''>";
-
+                          echo "<input type= 'hidden' class='form-control' name= 'seat_type' value =".$row['type']." required=''>";
+                          echo "<input type= 'hidden' class='form-control' name= 'no_of_seat' value =".$row['No_of_seats']." required=''>";
                       }
                       }
 
@@ -87,24 +101,14 @@ if (!isset($_SESSION['user_id'])) {
                 </div>
 
                 <div class="col-md-12">
-                  <input type="hidden" class="form-control" name="theater_id" value ='<?= $theater_id ?>' required="">
+                  <input type="hidden" class="form-control" name="seat_id" value ='<?= $seat_id ?>' required="">
                 </div>
                 <div class="col-md-12">
                   <input type="hidden" class="form-control" name="booking_id" value ='<?= $booking_id ?>' required="">
                 </div>
-                
-                <div class="col-md-12">
-                  <label  class="pb-2">Seat Type (Normal/VIP/Premium)</label>
-                  <input type="text" class="form-control" name="seat_type" value = '' required="" placeholder="Enter Seat Type in Capital Letter">
-                </div>
-                
-                <div class="col-md-12">
-                  <label  class="pb-2">No of seat: </label>
-                  <input type="number" class="form-control" name="no_of_seat" value = '' required="" placeholder="Enter seat quantity">
-                </div>
 
 
-                  <button type="submit" class= 'btn btn-primary' name= 'register'>Book Ticket</button>
+                  <button type="submit" class= 'btn btn-primary' name= 'register'>MAKE PAYMENT</button>
                 </div>
 
               </div>
@@ -118,22 +122,34 @@ if (!isset($_SESSION['user_id'])) {
 <?php
 
 if(isset($_POST['register'])) {
-
-    $user_id = $_SESSION['user_id'];
-    $theater_id = $_POST['theater_id'];
-    $seat_type = $_POST['seat_type'];
-    $no_of_seat = $_POST['no_of_seat'];
+    $seat_id = $_POST['seat_id'];
     $booking_id = $_POST['booking_id'];
 
-    $sql = "insert into seats (theater_id, type, No_of_seats) values ('$theater_id', '$seat_type', '$no_of_seat')";
-    if(mysqli_query($conn, $sql)) {
-        $seat_id = mysqli_insert_id($conn);
-        // Redirect to a confirmation page or show a success message  
-        echo "<script>alert('seat booked successfully!');</script>";
-        echo "<script>window.location.href='ticket.php?theater_id=".$theater_id."&booking_id=".$booking_id."&seat_id=".$seat_id."';</script>";
+    //if seat type is normal price is 500 , vip price is 800 , premium price is 1000
+    $seat_type = $_POST['seat_type'];
+    $no_of_seat = $_POST['no_of_seat'];
+
+    if ($seat_type == 'NORMAL') {
+        $price_per_seat = 500;
+    } elseif ($seat_type == 'VIP') {
+        $price_per_seat = 800;
+    } elseif ($seat_type == 'PREMIUM') {
+        $price_per_seat = 1000;
     } else {
-        echo "<script>alert('Ticket booking failed: " . $conn->error . "');</script>";
+        echo "<script>alert('Invalid seat type! Please enter NORMAL, VIP, or PREMIUM.');</script>";
+        exit();
     }
+    
+
+
+
+    $sql = "insert into ticket (seatID, bookingID, price) values ('$seat_id', '$booking_id', '$price_per_seat' * '$no_of_seat')";
+    if(mysqli_query($conn, $sql)) {
+        //Redirect to a confirmation page or show a success message  
+        //echo "<script>alert('Ticket booked successfully!');</script>";
+        header('Location: payment.php');
+        
+    } 
 
 
 }

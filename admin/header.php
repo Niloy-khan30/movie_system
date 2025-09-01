@@ -35,6 +35,8 @@
             <li><a href="movies.php">Movies</a></li>
             <li><a href="new_theater.php">Theator</a></li>
             <li><a href="hosting.php">Hosting</a></li>
+            <li><a href="showtimes.php">Set Shows</a></li>
+            <li><a href="approval.php">Approve</a></li>
             <li><a href="logout.php">Logout</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>

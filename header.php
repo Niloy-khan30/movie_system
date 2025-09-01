@@ -49,7 +49,7 @@
                       <li><a href="user_dashboard.php">Dashboard</a></li>
                       <li><a href="index.php">Movies</a></li>
                       <li><a href="show_theaters.php">Theator</a></li>
-                      <li><a href="booking.php">Booking</a></li>
+                      <li><a href="bookingHistory.php">Booking</a></li>
                       <li><a href="logout.php">Logout</a></li>
                       ';
                   } elseif ($type == 1) {

@@ -18,6 +18,12 @@ $bookings = mysqli_query($conn, "select booking.*, users.*, showtimes.*, movies.
 join users on booking.userID = users.userID
 join showtimes on booking.showtime_id = showtimes.showtime_id
 join movies on showtimes.movieID = movies.movieID");
+
+$payments = mysqli_query($conn, "SELECT payment.*, booking.*,users.* from payment
+join booking on payment.bookingID = booking.bookingID
+join users on booking.userID = users.userID");
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -130,6 +136,29 @@ table th:last-child, table td:last-child {
             </tr>
             <?php } ?>
         </table>
+        <h2>Payments</h2>
+        <table>
+            <tr><th>Booking ID</th><th>User</th><th>Amount</th><th>Status</th></tr>
+            <?php while($p = mysqli_fetch_assoc($payments)){ ?>
+            <tr>
+                <td><?= $p['bookingID'] ?></td>
+                <td><?= $p['name'] ?></td>
+                <td><?= $p['amount'] ?></td>
+                <td><?php 
+                if($p['status'] == 0){
+                    echo "Pending";
+                } else {
+                    echo "Approved";
+                }
+                ?></td>
+            </tr>
+            <?php } ?>
+        </table>
+
+
+
+
+
     </section>
    
 </body>

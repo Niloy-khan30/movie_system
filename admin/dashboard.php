@@ -9,5 +9,4 @@ if(!isset($_SESSION['user_id'])){
 
 
 include('header.php');
-include('footer.php');
 ?>

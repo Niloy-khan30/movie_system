@@ -31,7 +31,7 @@ join movies on showtimes.movieID = movies.movieID
 join new_theater on showtimes.theater_id = new_theater.theater_id
 where booking.userID = '$user_id'");
 ?>
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
